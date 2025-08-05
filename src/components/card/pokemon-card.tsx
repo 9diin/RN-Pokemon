@@ -25,17 +25,17 @@ export function PokemonCard({ number }: { number: number }) {
                 </View>
             </Pressable>
             <Modal visible={modalVisible} animationType="slide">
-                <SafeAreaView className="p-4 gap-6">
+                <SafeAreaView className="p-4 gap-4">
                     <View className="items-center">
                         <Image source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png` }} className="w-3/4 aspect-square object-contain" />
                         <View className="gap-4 items-center">
                             <Text className="text-4xl font-bold">리자몽</Text>
                             <View className="flex-row items-center gap-2">
                                 <View className="flex-row gap-2">
-                                    <View className="bg-neutral-100 px-5 py-2 rounded-md">
+                                    <View className="bg-neutral-100 px-4 py-[6px] rounded-md">
                                         <Text className="text-neutral-400">Normal</Text>
                                     </View>
-                                    <View className="bg-rose-100 px-5 py-2 rounded-md">
+                                    <View className="bg-rose-100 px-4 py-[6Px] rounded-md">
                                         <Text className="text-rose-400">Fire</Text>
                                     </View>
                                 </View>
@@ -43,7 +43,7 @@ export function PokemonCard({ number }: { number: number }) {
                         </View>
                     </View>
                     <View className="h-[1px] w-full bg-neutral-200" />
-                    <View className="flex-row w-full gap-3">
+                    <View className="flex-row w-full gap-4">
                         <Pressable className="flex-1 flex-row justify-center items-center gap-2 bg-amber-200 py-3 px-6 rounded-lg" onPress={() => alert("포획 버튼을 클릭하였습니다.")}>
                             <Image source={require("@/assets/images/pokeball.png")} className="w-6 aspect-square" />
                             <Text className="font-semibold">Catch !!</Text>
