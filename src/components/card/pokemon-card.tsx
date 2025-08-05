@@ -44,9 +44,9 @@ export function PokemonCard({ number }: { number: number }) {
                     </View>
                     <View className="h-[1px] w-full bg-neutral-200" />
                     <View className="flex-row w-full gap-3">
-                        <Pressable className="flex-1 flex-row justify-center items-center gap-2 bg-amber-200 py-4 px-6 rounded-lg">
-                            <Text className="font-semibold">리자몽</Text>
-                            <Text className="font-semibold">Catch</Text>
+                        <Pressable className="flex-1 flex-row justify-center items-center gap-2 bg-amber-200 py-3 px-6 rounded-lg" onPress={() => alert("포획 버튼을 클릭하였습니다.")}>
+                            <Image source={require("@/assets/images/pokeball.png")} className="w-6 aspect-square" />
+                            <Text className="font-semibold">Catch !!</Text>
                         </Pressable>
                         <Pressable className="bg-neutral-200 py-4 px-6 rounded-lg" onPress={() => setModalVisible(false)}>
                             <Text className="font-semibold">Close</Text>
