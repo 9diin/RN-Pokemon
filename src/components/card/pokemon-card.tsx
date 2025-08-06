@@ -1,33 +1,54 @@
+import { POKEMON_TYPE_COLORS } from "@/src/constants/pokemon-type.constant";
 import { useState } from "react";
-import { Image, Modal, Pressable, Text, View } from "react-native";
+import { FlatList, Image, Modal, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export function PokemonCard({ number }: { number: number }) {
+interface Pokemon {
+    id: number; // 포켓몬 id
+    ko: string; // 한글 이름
+    en: string; // 영어 이름
+    imgUrl: string; // 포켓몬 이미지
+    types: string[]; // 포켓몬 타입
+}
+
+interface Props {
+    props: Pokemon;
+}
+
+export function PokemonCard({ props }: Props) {
     const [modalVisible, setModalVisible] = useState<boolean>(false);
 
     return (
         <>
-            <Pressable className="w-1/2 p-4 bg-white rounded-2xl shadow-sm" onPress={() => setModalVisible(!modalVisible)}>
-                <Image source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png` }} className="w-full aspect-square object-contain" />
-                <View className="gap-4 -mt-4">
+            <Pressable className="w-full p-4 bg-white rounded-2xl shadow-sm" onPress={() => setModalVisible(!modalVisible)}>
+                <Image source={{ uri: props.imgUrl }} className="w-full aspect-square object-contain" />
+                <View className="gap-4 -mt-2">
                     <View>
-                        <Text className="text-2xl font-bold">어니부기</Text>
-                        <Text className="text-neutral-500">2 owned</Text>
+                        <View className="flex-row items-end gap-2">
+                            <Text className="text-2xl font-bold">{props.ko}</Text>
+                            <Text className="text-base text-neutral-400 font-bold">{props.en}</Text>
+                        </View>
+
+                        <Text className="text-neutral-400">2 owned</Text>
                     </View>
                     <View className="flex-row gap-2">
-                        <View className="bg-neutral-100 px-4 py-1 rounded-md">
-                            <Text className="text-neutral-400">노말</Text>
-                        </View>
-                        <View className="bg-sky-100 px-4 py-1 rounded-md">
-                            <Text className="text-sky-400">물</Text>
-                        </View>
+                        <FlatList
+                            data={props.types}
+                            renderItem={({ item }) => (
+                                <View className="px-3 py-1 rounded-md" style={{ backgroundColor: POKEMON_TYPE_COLORS[item as keyof typeof POKEMON_TYPE_COLORS].color }}>
+                                    <Text className="text-white font-semibold">{POKEMON_TYPE_COLORS[item as keyof typeof POKEMON_TYPE_COLORS].type_ko}</Text>
+                                </View>
+                            )}
+                            horizontal={true}
+                            ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
+                        />
                     </View>
                 </View>
             </Pressable>
             <Modal visible={modalVisible} animationType="slide">
                 <SafeAreaView className="p-4 gap-4">
                     <View className="items-center">
-                        <Image source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png` }} className="w-3/4 aspect-square object-contain" />
+                        <Image source={{ uri: props.imgUrl }} className="w-3/4 aspect-square object-contain" />
                         <View className="gap-4 items-center">
                             <Text className="text-4xl font-bold">리자몽</Text>
                             <View className="flex-row items-center gap-2">
