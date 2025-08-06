@@ -21,6 +21,16 @@ export function PokemonCard({ props }: Props) {
     return (
         <>
             <Pressable className="w-full p-4 bg-white rounded-2xl shadow-sm" onPress={() => setModalVisible(!modalVisible)}>
+                <FlatList
+                    data={props.types}
+                    renderItem={({ item }) => (
+                        <View className="px-3 py-[2px] rounded-md" style={{ backgroundColor: POKEMON_TYPE_COLORS[item as keyof typeof POKEMON_TYPE_COLORS].color }}>
+                            <Text className="text-sm text-white font-semibold">{POKEMON_TYPE_COLORS[item as keyof typeof POKEMON_TYPE_COLORS].type_ko}</Text>
+                        </View>
+                    )}
+                    horizontal={true}
+                    ItemSeparatorComponent={() => <View style={{ width: 6 }} />}
+                />
                 <Image source={{ uri: props.imgUrl }} className="w-full aspect-square object-contain" />
                 <View className="gap-4 -mt-2">
                     <View>
@@ -28,20 +38,7 @@ export function PokemonCard({ props }: Props) {
                             <Text className="text-xl font-bold">{props.ko}</Text>
                             <Text className="text-sm text-neutral-400 font-semibold">{props.en}</Text>
                         </View>
-
                         <Text className="text-neutral-400">2 owned</Text>
-                    </View>
-                    <View className="flex-row gap-2">
-                        <FlatList
-                            data={props.types}
-                            renderItem={({ item }) => (
-                                <View className="px-3 py-1 rounded-md" style={{ backgroundColor: POKEMON_TYPE_COLORS[item as keyof typeof POKEMON_TYPE_COLORS].color }}>
-                                    <Text className="text-white font-semibold">{POKEMON_TYPE_COLORS[item as keyof typeof POKEMON_TYPE_COLORS].type_ko}</Text>
-                                </View>
-                            )}
-                            horizontal={true}
-                            ItemSeparatorComponent={() => <View style={{ width: 8 }} />}
-                        />
                     </View>
                 </View>
             </Pressable>
