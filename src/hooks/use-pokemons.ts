@@ -7,6 +7,17 @@ interface Pokemon {
     en: string;
     imgUrl: string;
     types: string[];
+    weight: number;
+    height: number;
+    abilities: {
+        ability: {
+            name: string;
+        };
+    }[];
+    species: string;
+    description: string;
+    captureRate: number;
+    stats: number[];
 }
 
 export const usePokemons = () => {
@@ -22,7 +33,6 @@ export const usePokemons = () => {
 
             // 각각의 포켓몬 데이터 요청
             const requests = randomIds.map((id) => Promise.all([axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`), axios.get(`https://pokeapi.co/api/v2/pokemon-species/${id}`)]));
-
             const responses = await Promise.all(requests);
 
             const newPokemons: Pokemon[] = responses.map(([pokemonRes, speciesRes]) => {
@@ -30,17 +40,26 @@ export const usePokemons = () => {
                 const species = speciesRes.data;
                 const koreanEntry = species.names.find((name: any) => name.language.name === "ko");
 
+                console.log(pokemon.stats);
+
                 return {
                     id: pokemon.id,
                     ko: koreanEntry?.name || pokemon.name,
                     en: pokemon.name,
                     imgUrl: pokemon.sprites.front_default,
                     types: pokemon.types.map((t: any) => t.type.name),
+                    weight: pokemon.weight,
+                    height: pokemon.height,
+                    abilities: pokemon.abilities.splice(0, 5),
+                    species: species.genera.find((genera: any) => genera.language.name === "ko").genus,
+                    description: species.flavor_text_entries.find((genera: any) => genera.language.name === "ko").flavor_text,
+                    captureRate: species.capture_rate,
+                    stats: pokemon.stats.map((stat: any) => stat.base_stat),
                 };
             });
 
             setPokemons(newPokemons);
-            console.log(newPokemons);
+            // console.log(newPokemons);
         } catch (error) {
             console.error("POKEMON API ERROR:", error);
         } finally {
