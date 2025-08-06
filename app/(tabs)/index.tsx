@@ -1,8 +1,9 @@
 import { PokemonCard } from "@/src/components/card";
 import { AppHeader } from "@/src/components/common";
 import { usePokemons } from "@/src/hooks";
+import { ListRestart } from "lucide-react-native";
 import { useEffect } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Pressable, Text, View } from "react-native";
 
 export default function HomeScreen() {
     const { pokemons, fetchData } = usePokemons();
@@ -15,16 +16,21 @@ export default function HomeScreen() {
         <View className="w-full h-full">
             <AppHeader />
             <View className="w-full flex-1 pt-4 px-2 gap-4">
-                <Text className="text-3xl ml-2" style={{ fontFamily: "DungGeunMo" }}>
-                    Gotta catch &apos;em all
-                </Text>
+                <View className="w-full flex-row items-center justify-between px-3">
+                    <Text className="text-3xl" style={{ fontFamily: "DungGeunMo" }}>
+                        Gotta catch &apos;em all
+                    </Text>
+                    <Pressable className="bg-white p-2 rounded-lg" onPress={fetchData}>
+                        <ListRestart />
+                    </Pressable>
+                </View>
                 <FlatList
                     data={pokemons}
                     numColumns={2}
                     keyExtractor={(item) => item.id.toString()}
                     columnWrapperStyle={{ justifyContent: "space-between", paddingHorizontal: 4, marginBottom: 16 }}
                     renderItem={({ item }) => (
-                        <View style={{ flex: 1, marginHorizontal: 6 }}>
+                        <View style={{ flex: 1, marginHorizontal: 8 }}>
                             <PokemonCard props={item} />
                         </View>
                     )}

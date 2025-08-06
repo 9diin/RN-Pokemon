@@ -24,9 +24,9 @@ export function PokemonCard({ props }: Props) {
                 <Image source={{ uri: props.imgUrl }} className="w-full aspect-square object-contain" />
                 <View className="gap-4 -mt-2">
                     <View>
-                        <View className="flex-row items-end gap-2">
-                            <Text className="text-2xl font-bold">{props.ko}</Text>
-                            <Text className="text-base text-neutral-400 font-bold">{props.en}</Text>
+                        <View className="flex-row items-end gap-1">
+                            <Text className="text-xl font-bold">{props.ko}</Text>
+                            <Text className="text-sm text-neutral-400 font-semibold">{props.en}</Text>
                         </View>
 
                         <Text className="text-neutral-400">2 owned</Text>
