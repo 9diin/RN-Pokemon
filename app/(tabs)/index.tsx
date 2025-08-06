@@ -17,10 +17,12 @@ export default function HomeScreen() {
             <AppHeader />
             <View className="w-full flex-1 pt-4 px-2 gap-4">
                 <View className="w-full flex-row items-center justify-between px-3">
-                    <Text className="text-3xl" style={{ fontFamily: "DungGeunMo" }}>
-                        Gotta catch &apos;em all
-                    </Text>
-                    <Pressable className="bg-white p-2 rounded-lg" onPress={fetchData}>
+                    <View className="bg-white px-3 py-1 rounded-lg border border-[#FFCB05]/50">
+                        <Text className="text-3xl" style={{ fontFamily: "DungGeunMo" }}>
+                            Gotta catch &apos;em all
+                        </Text>
+                    </View>
+                    <Pressable className="bg-white p-2 rounded-lg border border-[#3B5BA7]/50" onPress={fetchData}>
                         <ListRestart />
                     </Pressable>
                 </View>
