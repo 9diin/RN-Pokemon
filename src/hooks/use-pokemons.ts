@@ -40,8 +40,6 @@ export const usePokemons = () => {
                 const species = speciesRes.data;
                 const koreanEntry = species.names.find((name: any) => name.language.name === "ko");
 
-                console.log(pokemon.stats);
-
                 return {
                     id: pokemon.id,
                     ko: koreanEntry?.name || pokemon.name,
@@ -59,7 +57,6 @@ export const usePokemons = () => {
             });
 
             setPokemons(newPokemons);
-            // console.log(newPokemons);
         } catch (error) {
             console.error("POKEMON API ERROR:", error);
         } finally {
