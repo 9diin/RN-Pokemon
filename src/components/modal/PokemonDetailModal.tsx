@@ -1,5 +1,6 @@
 import { POKEMON_TYPE_COLORS } from "@/src/constants/pokemon-type.constant";
-import { FlatList, Image, Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { supabase } from "@/src/utils/supabase";
+import { Alert, FlatList, Image, Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 interface Pokemon {
@@ -28,6 +29,35 @@ interface Props {
 }
 
 export function PokemonDetailModal({ visible, onClose, pokemon }: Props) {
+    const user = useAuthStore((state) => state.user);
+    const ballCount = useAuthStore((state) => state.ballCount);
+
+    const handleCatch = async () => {
+        // 로그인 => USER 테이블의 ball_count ... etc 컬럼 값들이 Zustand or Jotai 저장된 상태 => LocalStorage
+
+        // USER 테이블의 ball_count 값 -1 진행을 해줘야한다.
+        const { error } = await supabase
+            .from("user")
+            .update({ ball_count: ballCount - 1 })
+            .eq("id", user.id);
+
+        // 포켓몬 고유 포획률
+        const catchChance = Math.min(1, pokemon.captureRate / 255);
+        const ISCAUGHT = Math.random() < catchChance;
+
+        if (ISCAUGHT) {
+            // 성공 POKEMON 테이블 주입
+            const { data, error } = await supabase
+                .from("pokemon")
+                .insert([{ user_id: user.id, pokemon_id: pokemon.id }])
+                .select();
+        } else {
+            // 실패 Return
+            Alert.alert("왜.. 도망가냐...ㅠㅠ");
+            return;
+        }
+    };
+
     return (
         <Modal visible={visible} presentationStyle="fullScreen" animationType="slide">
             <SafeAreaView edges={["top", "bottom"]} style={{ flex: 1 }}>
@@ -122,7 +152,7 @@ export function PokemonDetailModal({ visible, onClose, pokemon }: Props) {
                     <View className="w-full">
                         <View className="h-[1px] w-full bg-neutral-200 mb-4" />
                         <View className="flex-row w-full gap-4 mb-4">
-                            <Pressable className="flex-1 flex-row justify-center items-center gap-2 bg-amber-200 py-3 px-6 rounded-lg" onPress={() => alert("포획 버튼을 클릭하였습니다.")}>
+                            <Pressable className="flex-1 flex-row justify-center items-center gap-2 bg-amber-200 py-3 px-6 rounded-lg" onPress={handleCatch}>
                                 <Image source={require("@/assets/images/pokeball.png")} className="w-6 aspect-square" />
                                 <Text className="font-semibold">Catch !!</Text>
                             </Pressable>
