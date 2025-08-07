@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { BookMarked, Crown, LayoutDashboard, Swords, User } from "lucide-react-native";
+import { BookMarked, Crown, LayoutDashboard, Swords, UserLock } from "lucide-react-native";
 
 export default function TabsLayout() {
     return (
@@ -16,7 +16,7 @@ export default function TabsLayout() {
             <Tabs.Screen name="pokedex" options={{ title: "도감", tabBarIcon: ({ color }) => <BookMarked size={20} color={color} /> }} />
             <Tabs.Screen name="rank" options={{ title: "랭킹", tabBarIcon: ({ color }) => <Crown size={20} color={color} /> }} />
             <Tabs.Screen name="dashboard" options={{ title: "대시보드", tabBarIcon: ({ color }) => <LayoutDashboard size={20} color={color} /> }} />
-            <Tabs.Screen name="profile" options={{ title: "프로필", tabBarIcon: ({ color }) => <User size={20} color={color} /> }} />
+            <Tabs.Screen name="sign-up" options={{ title: "회원가입", tabBarIcon: ({ color }) => <UserLock size={20} color={color} /> }} />
         </Tabs>
     );
 }
