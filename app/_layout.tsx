@@ -22,7 +22,7 @@ export default function RootLayout() {
 
     return (
         <ThemeProvider value={appTheme}>
-            <SafeAreaView className="w-full h-full">
+            <SafeAreaView edges={["top", "bottom"]} style={{ flex: 1 }}>
                 <Slot />
             </SafeAreaView>
         </ThemeProvider>

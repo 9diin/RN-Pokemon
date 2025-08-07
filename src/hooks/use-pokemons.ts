@@ -2,22 +2,22 @@ import axios from "axios";
 import { useState } from "react";
 
 interface Pokemon {
-    id: number;
-    ko: string;
-    en: string;
-    imgUrl: string;
-    types: string[];
-    weight: number;
-    height: number;
+    id: number; // 포켓몬 id
+    ko: string; // 한글 이름
+    en: string; // 영어 이름
+    imgUrl: string; // 포켓몬 이미지
+    types: string[]; // 포켓몬 타입
+    weight: number; // 포켓몬 무게
+    height: number; // 포켓몬 신장
     abilities: {
         ability: {
             name: string;
         };
-    }[];
-    species: string;
-    description: string;
-    captureRate: number;
-    stats: number[];
+    }[]; // 포켓몬 특성
+    species: string; // 포켓몬 분류
+    description: string; // 포켓몬 소개
+    captureRate: number; // 포켓몬 포획률
+    stats: number[]; // 포켓몬 스텟
 }
 
 export const usePokemons = () => {

@@ -13,10 +13,10 @@ export default function HomeScreen() {
     }, []);
 
     return (
-        <View className="w-full h-full">
+        <View className="flex-1">
             <AppHeader />
-            <View className="w-full flex-1 pt-4 px-2 gap-4">
-                <View className="w-full flex-row items-center justify-between px-3">
+            <View className="w-full flex-1 p-4 pb-0 gap-4">
+                <View className="w-full flex-row items-center justify-between">
                     <View className="bg-white px-3 py-1 rounded-lg shadow-sm">
                         <Text className="text-3xl" style={{ fontFamily: "DungGeunMo" }}>
                             Gotta catch &apos;em all
@@ -30,9 +30,15 @@ export default function HomeScreen() {
                     data={pokemons}
                     numColumns={2}
                     keyExtractor={(item) => item.id.toString()}
-                    columnWrapperStyle={{ justifyContent: "space-between", paddingHorizontal: 4, marginBottom: 16 }}
-                    renderItem={({ item }) => (
-                        <View style={{ flex: 1, marginHorizontal: 8 }}>
+                    columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 16 }}
+                    renderItem={({ item, index }) => (
+                        <View
+                            style={{
+                                flex: 1,
+                                marginRight: index % 2 === 0 ? 8 : 0, // 왼쪽 아이템은 오른쪽 마진
+                                marginLeft: index % 2 === 1 ? 8 : 0, // 오른쪽 아이템은 왼쪽 마진
+                            }}
+                        >
                             <PokemonCard props={item} />
                         </View>
                     )}
